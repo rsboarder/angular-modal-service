@@ -121,13 +121,15 @@
                 if (delay === undefined || delay === null) delay = 0;
                 $timeout(function () {
                     //  Resolve the 'close' promise.
-                    closeDeferred.resolve(result);
+                    if (closeDeferred) {
+                        closeDeferred.resolve(result);
+                    }
 
                     //  Let angular remove the element and wait for animations to finish.
                     $animate.leave(modalElement)
                             .then(function () {
-                                //  Resolve the 'closed' promise.
-                                closedDeferred.resolve(result);
+                            //  Resolve the 'closed' promise.
+                            closedDeferred.resolve(result);
 
                             //  We can now clean up the scope
                             modalScope.$destroy();
